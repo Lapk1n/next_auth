@@ -14,8 +14,10 @@ import FormSuccess from "./FormSuccess"
 import { useState, useTransition } from "react"
 import { register } from "@/action/register"
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter()
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {

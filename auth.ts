@@ -14,14 +14,28 @@ declare module "next-auth" {
 }
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/login",
+    error: "/error",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() }
+      })
+    }
+  },
   callbacks: {
     async signIn({ user, account }) {
+      // Allow OAuth without verification
       if (account?.access_token) {
         return true
       }
 
       const existingUser = await getUserById(user.id || '')
       
+      // Block credentials auth without verification
       if (!existingUser || !existingUser.emailVerified) {
         return false
       }

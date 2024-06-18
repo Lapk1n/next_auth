@@ -13,7 +13,8 @@ import { Input } from "../ui/Input"
 import FormError from "./FormError"
 import FormSuccess from "./FormSuccess"
 import { login } from "@/action/login"
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
+import { useSearchParams } from "next/navigation"
 
 const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -23,7 +24,10 @@ const LoginForm = () => {
       password: ''
     }
   }) 
-
+  const searchParams = useSearchParams()
+  const searchParamsError = searchParams.get("error")
+  const oAuthAccountNotLinked = searchParamsError === "OAuthAccountNotLinked"
+  
   const [ isPending, setTransition ] = useTransition()
   const [ error, setError] = useState<string | undefined>('')
   const [ success, setSuccess] = useState<string | undefined>('')
@@ -35,9 +39,16 @@ const LoginForm = () => {
     setTransition(() => {
       login(values).then((data) => {
         setError(data?.error)
+        setSuccess(data?.success)
       })
     })
-  } 
+  }
+
+  useEffect(() => {
+    if (oAuthAccountNotLinked) {
+      setError("Account already exist. Use credentials to login")
+    }
+  }, [oAuthAccountNotLinked])
 
   return (
     <Card className="w-[400px] shadow-md p-4">
