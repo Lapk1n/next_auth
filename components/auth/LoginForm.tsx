@@ -13,7 +13,7 @@ import { Input } from "../ui/Input"
 import FormError from "./FormError"
 import FormSuccess from "./FormSuccess"
 import { login } from "@/action/login"
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 
 const LoginForm = () => {
@@ -32,10 +32,15 @@ const LoginForm = () => {
   const [ isPending, setTransition ] = useTransition()
   const [ error, setError] = useState<string | undefined>('')
   const [ success, setSuccess] = useState<string | undefined>('')
+  const [ disableSendAgain, setDisableSendAgain] = useState(true)
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError('')
     setSuccess('')
+
+    if (!disableSendAgain) {
+      setDisableSendAgain(true)
+    }
     
     setTransition(() => {
       login(values).then((data) => {
@@ -55,6 +60,14 @@ const LoginForm = () => {
     })
   }
 
+  useEffect(() => {
+    if (show2FA && disableSendAgain) {
+      setTimeout(() => {
+        setDisableSendAgain(false)
+      }, 60000);
+    }
+  }, [show2FA, disableSendAgain])
+  
   return (
     <Card className="w-[400px] shadow-md p-4">
         <CardHeader className="flex flex-col">
@@ -72,23 +85,29 @@ const LoginForm = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
                 {show2FA && (
-                    <FormField
-                      control={form.control}
-                      name='code'
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Confirmation code</FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="text"
-                              disabled={isPending}
-                            />
-                          </FormControl>
-                          <FormMessage/>
-                        </FormItem>
-                    )}  
-                  />                  
+                  <>
+                      <FormField
+                        control={form.control}
+                        name='code'
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Confirmation code</FormLabel>
+                            <FormControl>
+                              <Input
+                                {...field}
+                                type="text"
+                                disabled={isPending}
+                              />
+                            </FormControl>
+                            <FormMessage/>
+                          </FormItem>
+                        )}  
+                      />  
+                  
+                      <Button disabled={disableSendAgain} variant='link' type="submit" className="text-center font-normal !no-underline p-0 !mt-1">
+                        Didn't get the code? Send again
+                      </Button>
+                  </>
                 )}
                 {!show2FA && (
                   <>
@@ -128,21 +147,20 @@ const LoginForm = () => {
                           <FormMessage/>
                         </FormItem>
                       )}  
-                    />                    
+                    />
+
+                    <Button variant='link' className="text-center font-normal !no-underline p-0 !mt-1">
+                      <Link href='/reset'>Forgot password?</Link>
+                    </Button>                    
                   </>
                 )}
 
               </div>
 
-              <Button variant='link' className="text-center font-normal !no-underline p-0 !mt-1">
-                <Link href='/reset'>Forgot password?</Link>
-              </Button>
-
               <FormError message={error || oAuthError}/>
 
               <FormSuccess message={success}/>
 
-              {/* TODO: implement counter to resend the code */}
               <Button 
                 type="submit"
                 className="w-full"

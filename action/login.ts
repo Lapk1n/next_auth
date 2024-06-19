@@ -10,7 +10,6 @@ import { generateVerificationToken, generateTwoFactorToken } from '@/utils/token
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from '@/lib/mail';
 import { getTwoFactorTokenByEmail } from '@/utils/two-factor-token';
 import { db } from '@/lib/db';
-import { getTwoFactorConfirmationByUserId } from '@/utils/two-factor-confirmation';
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
     const validatedFields = LoginSchema.safeParse(values)
@@ -42,8 +41,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
             }
 
             if (twoFactorToken.token !== code) {
-                console.log(twoFactorToken.token, code);
-                
                 return { error: "Invalid code" }
             }
 
@@ -53,20 +50,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
                 return { error: "Code expired" }
             }
 
-            await db.twoFactorToken.delete({
-                where: { id: twoFactorToken.id }
-            })
-
-            const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id)
-
-            if (existingConfirmation) {
-                await db.twoFactorConfirmation.delete({
-                    where: { id: existingConfirmation.id }
-                })
-            }
-
-            await db.twoFactorConfirmation.create({
-                data: { userId: existingUser.id }
+            await db.twoFactorToken.deleteMany({
+                where: { email: twoFactorToken.email }
             })
         } else {
             const twofactorToken = await generateTwoFactorToken(email)

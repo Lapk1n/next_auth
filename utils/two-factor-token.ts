@@ -14,11 +14,11 @@ export const getTwoFactorTokenByToken = async (token: string) => {
 
 export const getTwoFactorTokenByEmail = async (email: string) => {
     try {
-        const twoFactorToken = await db.twoFactorToken.findFirst({
+        const twoFactorToken = await db.twoFactorToken.findMany({
             where: { email }
         })
 
-        return twoFactorToken;
+        return twoFactorToken[twoFactorToken.length - 1];
     } catch (error) {
         return null
     }
