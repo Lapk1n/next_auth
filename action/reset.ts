@@ -1,6 +1,6 @@
 "use server"
 
-import { sendPasswordReset } from '@/lib/resend'
+import { sendPasswordReset } from '@/lib/mail'
 import { ResetSchema } from '@/schemas'
 import { generateResetToken } from '@/utils/tokens'
 import { getUserByEmail } from '@/utils/user'
