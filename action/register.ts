@@ -15,7 +15,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
         return { error: 'Invalid fields' }
     }
 
-    const { email, password, name } = validatedFields.data
+    const { email, password, name, enable2FA } = validatedFields.data
 
     const existingUser = await getUserByEmail(email)
 
@@ -26,7 +26,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     await db.user.create({
-        data: { name, email, password: hashedPassword }
+        data: { name, email, password: hashedPassword, isTwoFactorEnabled: enable2FA }
     })
 
     const verificationToken = await generateVerificationToken(email)

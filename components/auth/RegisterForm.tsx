@@ -14,16 +14,16 @@ import FormSuccess from "./FormSuccess"
 import { useState, useTransition } from "react"
 import { register } from "@/action/register"
 import Link from "next/link"
-import { useRouter } from "next/navigation";
+import { Checkbox } from "../ui/checkbox"
 
 const RegisterForm = () => {
-  const router = useRouter()
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       email: '',
       password: '',
-      name: ''
+      name: '',
+      enable2FA: false,
     }
   }) 
 
@@ -111,6 +111,22 @@ const RegisterForm = () => {
                           disabled={isPending}
                         />
                       </FormControl>
+                      <FormMessage/>
+                    </FormItem>
+                  )}  
+                />
+
+                <FormField
+                  control={form.control}
+                  name='enable2FA'
+                  render={({ field }) => (
+                    <FormItem className="flex items-center pt-1.5">
+                      <FormControl>
+                        <Checkbox disabled={isPending} checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+
+                      <FormLabel className="!m-0 !ml-2">Enable two factor authentication</FormLabel>
+
                       <FormMessage/>
                     </FormItem>
                   )}  
