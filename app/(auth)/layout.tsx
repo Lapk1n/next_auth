@@ -1,4 +1,3 @@
-
 interface AuthLayoutProps {
     children: React.ReactNode
 }
@@ -6,7 +5,7 @@ interface AuthLayoutProps {
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
     <div className="h-full flex items-center justify-center bg-gradient-to-b from-sky-400 to-blue-800">
-        {children}
+      {children}
     </div>
   )
 }

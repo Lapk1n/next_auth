@@ -62,7 +62,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         }
 
     }
-
+    
     try {
         await signIn("credentials", { email, password, redirectTo: DEFAULT_LOGIN_REDIRECT })
     } catch (error) {
