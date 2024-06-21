@@ -37,7 +37,6 @@ const LoginForm = () => {
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError('')
     setSuccess('')
-    console.log(11111);
     
     if (!disableSendAgain) {
       setDisableSendAgain(true)

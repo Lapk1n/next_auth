@@ -9,7 +9,6 @@ import bcrypt from 'bcryptjs'
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     const user = await currentUser()
-    console.log(user);
     
     if (!user || !user.email) {
         return { error: "Unauthorized!" }

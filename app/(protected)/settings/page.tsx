@@ -24,7 +24,6 @@ const SettingsPage = () => {
   const { update } = useSession()
   const user = useCurrentUser()
   const hideFieldsForOAuthLogin = user?.isOAuth
-  console.log(user);
   
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition(() => {

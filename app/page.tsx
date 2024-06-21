@@ -14,7 +14,7 @@ export default function Home() {
         A simple authentication service
       </p>
 
-      <LoginButton>
+      <LoginButton mode="modal" asChild>
         <Button variant='secondary'>Sign in</Button>
       </LoginButton>
     </div>

@@ -29,7 +29,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         where: { id: user.id },
         data: { emailVerified: new Date() }
       })
-    }
+    },
   },
   callbacks: {
     async signIn({ user, account }) {
@@ -62,18 +62,29 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.role = existingUser.role
       }
 
-      session.user.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
       session.user.name = existingUser.name
       session.user.email = existingUser.email
+      session.user.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
       
       const existingAccount = await getAccountByUserId(existingUser.id)
 
       if (existingAccount) {
         session.user.isOAuth = !!existingAccount
       }
-      console.log(session);
-      
+
       return session;
+    },
+    async jwt({ token }) {
+      if (!token.sub) {
+        return token
+      }
+      const existingUser = await getUserById(token.sub)
+
+      if (!existingUser) {
+        return token
+      }
+
+      return token
     },
   },
   adapter: PrismaAdapter(db),

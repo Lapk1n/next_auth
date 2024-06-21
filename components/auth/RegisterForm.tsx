@@ -14,7 +14,7 @@ import FormSuccess from "./FormSuccess"
 import { useState, useTransition } from "react"
 import { register } from "@/action/register"
 import Link from "next/link"
-import { Checkbox } from "../ui/checkbox"
+import { Checkbox } from "../ui/Checkbox"
 
 const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
