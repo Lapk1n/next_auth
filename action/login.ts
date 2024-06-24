@@ -60,7 +60,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
             // notify the view to change the form
             return { twoFactor: true }
         }
-
     }
     
     try {

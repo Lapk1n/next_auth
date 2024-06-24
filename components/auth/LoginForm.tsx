@@ -16,6 +16,8 @@ import { login } from "@/action/login"
 import { useEffect, useState, useTransition } from "react"
 import { useSearchParams } from "next/navigation"
 
+const oAuthErrors = [ "OAuthAccountNotLinked", "OAuthCallbackError" ]
+
 const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -24,9 +26,11 @@ const LoginForm = () => {
       password: ''
     }
   }) 
+
   const searchParams = useSearchParams()
-  const searchParamsError = searchParams.get("error")
-  const oAuthError = searchParamsError === "OAuthAccountNotLinked" ? "Account already exist. Use credentials to login" : ''
+  const searchParamsError = searchParams.get("error") || ''
+  const oAuthError = oAuthErrors.includes(searchParamsError) ?
+  "A problem occured with OAuth provider. Try another one or use credentials" : ''
   
   const [ show2FA, setShow2FA] = useState(false)
   const [ isPending, setTransition ] = useTransition()
