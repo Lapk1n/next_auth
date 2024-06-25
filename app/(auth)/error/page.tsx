@@ -1,11 +1,9 @@
-import ErrorCard from '@/components/auth/ErrorCard';
+import { ErrorCard } from '@/components/auth/ErrorCard';
 
-function Error() {
+export default function Error() {
   return (
     <div>
       <ErrorCard />
     </div>
   );
 }
-
-export default Error;

@@ -13,7 +13,7 @@ import {
 
 import { LogoutButton } from './LogoutButton';
 
-function UserButton() {
+export const UserButton = () => {
   const user = useCurrentUser();
 
   return (
@@ -36,6 +36,4 @@ function UserButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
-
-export default UserButton;
+};

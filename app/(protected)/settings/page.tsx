@@ -8,8 +8,8 @@ import { useSession } from 'next-auth/react';
 import * as z from 'zod';
 
 import { settings } from '@/action/settings';
-import FormError from '@/components/auth/FormError';
-import FormSuccess from '@/components/auth/FormSuccess';
+import { FormError } from '@/components/auth/FormError';
+import { FormSuccess } from '@/components/auth/FormSuccess';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import {
@@ -20,7 +20,7 @@ import { Switch } from '@/components/ui/Switch';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { SettingsSchema } from '@/schemas';
 
-function SettingsPage() {
+export default function SettingsPage() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -144,5 +144,3 @@ function SettingsPage() {
     </Card>
   );
 }
-
-export default SettingsPage;

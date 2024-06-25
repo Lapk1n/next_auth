@@ -17,11 +17,11 @@ import { Card, CardContent, CardHeader } from '../ui/Card';
 import { Checkbox } from '../ui/Checkbox';
 import { Input } from '../ui/Input';
 
-import FormError from './FormError';
-import FormSuccess from './FormSuccess';
-import Social from './Social';
+import { FormError } from './FormError';
+import { FormSuccess } from './FormSuccess';
+import { Social } from './Social';
 
-function RegisterForm() {
+export const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -164,6 +164,4 @@ function RegisterForm() {
       </Button>
     </Card>
   );
-}
-
-export default RegisterForm;
+};

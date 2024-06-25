@@ -8,7 +8,7 @@ import { signIn } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 
-function Social() {
+export const Social = () => {
   const handleClick = (provider: 'google' | 'github') => {
     signIn(provider, {
       callbackUrl: DEFAULT_LOGIN_REDIRECT,
@@ -26,6 +26,4 @@ function Social() {
       </Button>
     </div>
   );
-}
-
-export default Social;
+};

@@ -17,10 +17,10 @@ import { NewPasswordSchema } from '@/schemas';
 import { Card, CardContent, CardHeader } from '../ui/Card';
 import { Input } from '../ui/Input';
 
-import FormError from './FormError';
-import FormSuccess from './FormSuccess';
+import { FormError } from './FormError';
+import { FormSuccess } from './FormSuccess';
 
-function NewPasswordForm() {
+export const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -150,6 +150,4 @@ function NewPasswordForm() {
       </Button>
     </Card>
   );
-}
-
-export default NewPasswordForm;
+};

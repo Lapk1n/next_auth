@@ -16,10 +16,10 @@ import { ResetSchema } from '@/schemas';
 import { Card, CardContent, CardHeader } from '../ui/Card';
 import { Input } from '../ui/Input';
 
-import FormError from './FormError';
-import FormSuccess from './FormSuccess';
+import { FormError } from './FormError';
+import { FormSuccess } from './FormSuccess';
 
-function ResetForm() {
+export const ResetForm = () => {
   const form = useForm<z.infer<typeof ResetSchema>>({
     resolver: zodResolver(ResetSchema),
     defaultValues: { email: '' },
@@ -97,6 +97,4 @@ function ResetForm() {
       </Button>
     </Card>
   );
-}
-
-export default ResetForm;
+};

@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import UserButton from '@/components/auth/UserButton';
+import { UserButton } from '@/components/auth/UserButton';
 import { Button } from '@/components/ui/Button';
 
-function Navbar() {
+export function Navbar() {
   const pathName = usePathname();
 
   return (
@@ -35,5 +35,3 @@ function Navbar() {
     </nav>
   );
 }
-
-export default Navbar;

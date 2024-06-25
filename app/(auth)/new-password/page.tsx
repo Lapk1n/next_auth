@@ -1,9 +1,7 @@
-import NewPasswordForm from '@/components/auth/NewPasswordForm';
+import { NewPasswordForm } from '@/components/auth/NewPasswordForm';
 
-function NewPassword() {
+export default function NewPassword() {
   return (
     <NewPasswordForm />
   );
 }
-
-export default NewPassword;

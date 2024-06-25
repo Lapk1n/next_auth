@@ -1,9 +1,7 @@
-import VerificationForm from '@/components/auth/VerificationForm';
+import { VerificationForm } from '@/components/auth/VerificationForm';
 
-function Verification() {
+export default function Verification() {
   return (
     <VerificationForm />
   );
 }
-
-export default Verification;

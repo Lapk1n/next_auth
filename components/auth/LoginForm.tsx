@@ -17,13 +17,13 @@ import { LoginSchema } from '@/schemas';
 import { Card, CardContent, CardHeader } from '../ui/Card';
 import { Input } from '../ui/Input';
 
-import FormError from './FormError';
-import FormSuccess from './FormSuccess';
-import Social from './Social';
+import { FormError } from './FormError';
+import { FormSuccess } from './FormSuccess';
+import { Social } from './Social';
 
 const oAuthErrors = ['OAuthAccountNotLinked', 'OAuthCallbackError'];
 
-function LoginForm() {
+export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -188,6 +188,4 @@ function LoginForm() {
       </Button>
     </Card>
   );
-}
-
-export default LoginForm;
+};

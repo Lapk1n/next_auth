@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 
-function FormSuccess({ message }: { message?: string }) {
+export const FormSuccess = ({ message }: { message?: string }) => {
   if (!message) {
     return null;
   }
@@ -12,6 +12,4 @@ function FormSuccess({ message }: { message?: string }) {
       <p>{message}</p>
     </div>
   );
-}
-
-export default FormSuccess;
+};
