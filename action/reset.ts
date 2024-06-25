@@ -1,31 +1,32 @@
-"use server"
+'use server';
 
-import { sendPasswordReset } from '@/lib/mail'
-import { ResetSchema } from '@/schemas'
-import { generateResetToken } from '@/utils/tokens'
-import { getUserByEmail } from '@/utils/user'
-import * as z from 'zod'
+import * as z from 'zod';
+
+import { sendPasswordReset } from '@/lib/mail';
+import { ResetSchema } from '@/schemas';
+import { generateResetToken } from '@/utils/tokens';
+import { getUserByEmail } from '@/utils/user';
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
-    const validatedFields = ResetSchema.safeParse(values)
+  const validatedFields = ResetSchema.safeParse(values);
 
-    if (!validatedFields.success) {
-        return { error: "Invalid email!" }
-    }
+  if (!validatedFields.success) {
+    return { error: 'Invalid email!' };
+  }
 
-    const { email } = validatedFields.data
-    const existingUser = await getUserByEmail(email)
+  const { email } = validatedFields.data;
+  const existingUser = await getUserByEmail(email);
 
-    if (!existingUser) {
-        return { error: "Email not found" }
-    }
+  if (!existingUser) {
+    return { error: 'Email not found' };
+  }
 
-    if (!existingUser.password) {
-        return { error: "Use Google or Github auth provider to reset your password" }
-    }
+  if (!existingUser.password) {
+    return { error: 'Use Google or Github auth provider to reset your password' };
+  }
 
-    const resetToken = await generateResetToken(email)
-    await sendPasswordReset(resetToken.email, resetToken.token)
+  const resetToken = await generateResetToken(email);
+  await sendPasswordReset(resetToken.email, resetToken.token);
 
-    return { success: "Reset email sent!" }
-}
+  return { success: 'Reset email sent!' };
+};

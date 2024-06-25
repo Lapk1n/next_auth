@@ -1,10 +1,9 @@
-import ResetForm from '@/components/auth/ResetForm'
-import React from 'react'
+import ResetForm from '@/components/auth/ResetForm';
 
-const Reset = () => {
+function Reset() {
   return (
     <ResetForm />
-  )
+  );
 }
 
-export default Reset
+export default Reset;

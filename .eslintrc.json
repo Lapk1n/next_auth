@@ -1,3 +1,45 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb",
+    "airbnb-typescript"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["simple-import-sort"],
+  "rules": {
+    "no-param-reassign":"off",
+    "import/prefer-default-export": "off",
+    "vars-on-top":"off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "consistent-return": "off",
+    "simple-import-sort/imports": [
+      "error",
+      {
+        "groups": [
+          // Packages `react` related packages come first.
+          ["^react", "^@?\\w"],
+          // Internal packages.
+          ["^(@|components)(/.*|$)"],
+          // Side effect imports.
+          ["^\\u0000"],
+          // Parent imports. Put `..` last.
+          ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+          // Other relative imports. Put same-folder imports and `.` last.
+          ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+          // Style imports.
+          ["^.+\\.?(css)$"]
+        ]
+      }
+    ]
+  }
 }

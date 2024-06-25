@@ -1,10 +1,9 @@
-import VerificationForm from '@/components/auth/VerificationForm'
-import React from 'react'
+import VerificationForm from '@/components/auth/VerificationForm';
 
-const Verification = () => {
+function Verification() {
   return (
-    <VerificationForm/>
-  )
+    <VerificationForm />
+  );
 }
 
-export default Verification
+export default Verification;

@@ -1,12 +1,11 @@
-import ErrorCard from '@/components/auth/ErrorCard'
-import React from 'react'
+import ErrorCard from '@/components/auth/ErrorCard';
 
-const Error = () => {
+function Error() {
   return (
     <div>
-        <ErrorCard />
+      <ErrorCard />
     </div>
-  )
+  );
 }
 
-export default Error
+export default Error;
